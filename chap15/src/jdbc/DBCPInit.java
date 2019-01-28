@@ -33,7 +33,7 @@ public class DBCPInit extends HttpServlet{
 	private void loadJDBCDriver() {
 		try {
 			String jdbcUrl="jdbc:mysql://localhost:3306/guestbook?"
-					+ "useUnicode=true&characterEncoding=utf8";
+					+ "useUnicode=true&characterEncoding=utf8&serverTimezone=UTC";
 			String username="jspexam";
 			String pw="1111";
 			

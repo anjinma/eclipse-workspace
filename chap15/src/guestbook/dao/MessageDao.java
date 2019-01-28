@@ -27,7 +27,7 @@ public class MessageDao {
 		try {
 			pstmt=conn.prepareStatement(
 					"insert into guestbook_message (guest_name,password,message)"
-					+ "values (?,?,?)");
+					+ " values (?,?,?)");
 			pstmt.setString(1, message.getGuestName());
 			pstmt.setString(2, message.getPassword());
 			pstmt.setString(3, message.getMessage());
@@ -44,8 +44,8 @@ public class MessageDao {
 		try {
 			pstmt = conn.prepareStatement(
 					"select message_id,guest_name,password,message"
-					+ "from guestbook_message"
-					+ "where message_id = ?");
+					+ " from guestbook_message"
+					+ " where message_id = ?");
 			pstmt.setInt(1, messageId);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
@@ -76,7 +76,7 @@ public class MessageDao {
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery("select count(*)"
-					+ "from guestbook_message");
+					+ " from guestbook_message");
 			rs.next();
 			return rs.getInt(1);
 		} finally {
@@ -91,8 +91,8 @@ public class MessageDao {
 		try {
 			pstmt = conn.prepareStatement(
 					"select * from guestbook_message"
-					+ "order by message_id desc"
-					+ "limit ?,?");
+					+ " order by message_id desc"
+					+ " limit ?,?");
 			pstmt.setInt(1, firstRow-1);
 			pstmt.setInt(2, endRow-firstRow+1);
 			rs = pstmt.executeQuery();
@@ -117,7 +117,7 @@ public class MessageDao {
 		try {
 			pstmt = conn.prepareStatement(
 					"delete from guestbook_message"
-					+ "where message_id = ?");
+					+ " where message_id = ?");
 			pstmt.setInt(1, messageId);
 			return pstmt.executeUpdate();
 		} finally {
