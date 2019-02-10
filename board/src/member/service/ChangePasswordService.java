@@ -2,37 +2,31 @@ package member.service;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Date;
 
 import jdbc.JdbcUtil;
 import jdbc.connection.ConnectionProvider;
 import member.dao.MemberDao;
 import member.model.Member;
 
-public class JoinService {
+public class ChangePasswordService {
 
 	private MemberDao memberDao = new MemberDao();
 	
-	public void join(JoinRequest joinReq) {
+	public void changePassword(String userId, String curPwd, String newPwd) {
 		Connection conn = null;
 		try {
 			conn = ConnectionProvider.getConnection();
 			conn.setAutoCommit(false);
 			
-			Member member = memberDao.selectById(conn, joinReq.getId());
-			if(member != null) {
-				JdbcUtil.rollback(conn);
-				System.out.println("아이디가 중복이다 임마!");
-				throw new DuplicatedIdException();
+			Member member = memberDao.selectById(conn, userId);
+			if(member == null) {
+				throw new MemberNotFoundException();
 			}
-			
-			memberDao.insert(conn, 
-					new Member(
-							joinReq.getId(),
-							joinReq.getName(),
-							joinReq.getPassword(),
-							new Date())
-					);
+			if(!member.matchPassword(curPwd)) {
+				throw new InvalidPasswordException();
+			}
+			member.changePassword(newPwd);
+			memberDao.update(conn, member);
 			conn.commit();
 		} catch (SQLException e) {
 			JdbcUtil.rollback(conn);
