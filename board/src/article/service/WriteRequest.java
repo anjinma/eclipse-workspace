@@ -14,6 +14,9 @@ public class WriteRequest {
 		this.writer = writer;
 		this.title = title;
 		this.content = content;
+		System.out.println(writer);
+		System.out.println(title);
+		System.out.println(content);
 	}
 	public Writer getWriter() {
 		return writer;
